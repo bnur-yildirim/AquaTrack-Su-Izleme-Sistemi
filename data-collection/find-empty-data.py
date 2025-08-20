@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 
 # Folders containing downloaded images and NDWI masks
-images_folder = "./data/gol_tuz/images"
-ndwi_folder = "./data/gol_tuz/ndwi_masks"
+images_folder = "./data/gol_van/images"
+ndwi_folder = "./data/gol_van/ndwi_masks"
 
 
 def check_empty_tifs_realtime(folder):

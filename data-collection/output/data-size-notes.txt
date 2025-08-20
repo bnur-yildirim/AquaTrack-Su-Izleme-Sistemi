@@ -1,0 +1,43 @@
+gol_tuz:
+    before deleting:
+        images:     68380
+        ndwi_masks: 17098
+    after deleting:
+        images:     36792
+        ndwi_masks: 9201
+
+gol_van:
+    before deleting:
+        images:     23408
+        ndwi_masks: 5852
+    after deleting:
+        images:     9028
+        ndwi_masks: 2258
+
+gol_egridir:
+    before deleting:
+        images:     29012
+        ndwi_masks: 7254
+    after deleting:
+        images:     23464
+        ndwi_masks: 5869
+
+gol_burdur:
+    before deleting:
+        images:     14696
+        ndwi_masks: 3675
+
+gol_salda:
+    before deleting:
+        images:     984
+        ndwi_masks: 246
+
+gol_sapanca:
+    before deleting:
+        images:     1500
+        ndwi_masks: 246
+
+gol_ulubat:
+    before deleting:
+        images:     6572
+        ndwi_masks: 1646
