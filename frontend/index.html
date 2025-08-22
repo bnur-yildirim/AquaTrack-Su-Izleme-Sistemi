@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AquaTrack — Ana Sayfa</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="assets/aquatrack-logo.svg" alt="AquaTrack" class="logo-mark" />
+        <div class="logo-text">AquaTrack</div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="active">Ana Sayfa</a>
+        <a href="map.html">Su Durumu Haritası</a>
+        <a href="quality.html">Su Kalitesi Paneli</a>
+        <a href="alerts.html">Uyarılar &amp; Tahminler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Su Kaynaklarını İzleme ve Erken Uyarı Sistemi</h1>
+        <p>Uzaktan algılama verileriyle göl ve barajlardaki su durumu ve kalitesini analiz ederek kuraklık risklerini tahmin ediyoruz.</p>
+        <a class="btn" href="map.html">Su Durumuna Göz At</a>
+      </div>
+    </section>
+
+    <section class="panels container">
+      <div class="card wide">
+        <h3>Su Durumu Haritası</h3>
+        <div class="map-placeholder">
+          <div class="map-visual">
+            <img src="örenk_img.jpeg" alt="Van Gölü" class="map-image">
+            <div class="tooltip">Van Gölü<br>Su Yüzey değişimi: +8.2%</div>
+          </div>
+          <div id="map" class="map-container"></div>
+        </div>
+      </div>
+
+      <div class="card small">
+        <h3>Su Kalitesi Paneli</h3>
+        <div class="chart">
+          <svg viewBox="0 0 200 80" class="mini-chart">
+            <polyline fill="none" stroke="#1e88e5" stroke-width="3" points="0,60 30,50 60,30 90,40 120,25 150,35 180,45 200,40"/>
+          </svg>
+          <small>Klorofil-a (µg/L)</small>
+        </div>
+      </div>
+
+      <div class="card small">
+        <h3>Uyarılar & Tahminler</h3>
+        <div class="alert-box">
+          <strong>Kuraklık Uyarısı</strong>
+          <p>Van Gölünde su seviyesi düşüşü izleniyor. Kuraklık riski dikkate alınmalıdır.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="partners container">
+      <div class="card">
+        <h3>Kurumsal İşbirlikleri</h3>
+        <p>DSİ, belediyeler ve diğer kurumlarla su yönetimi projelerinde işbirlikleri yapıyoruz.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 AquaTrack. Tüm hakları saklıdır.</p>
+    </div>
+  </footer>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
+  <script>
+    // Haritayı başlat
+    var map = L.map('map').setView([38.4942, 43.3832], 9); // Van Gölü civarı
+  
+    // OpenStreetMap katmanı ekle
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap Katkıda Bulunanlar'
+    }).addTo(map);
+  
+    // Van Gölü marker
+    L.marker([38.4942, 43.3832]).addTo(map)
+        .bindPopup('<b>Van Gölü</b><br>Su Yüzey değişimi: +8.2%')
+        .openPopup();
+  </script>
+
+  <script src="assets/main.js"></script>
+</body>
+</html>

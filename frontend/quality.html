@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Su Kalitesi Paneli — AquaTrack</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="assets/aquatrack-logo.svg" alt="AquaTrack" class="logo-mark" />
+        <div class="logo-text">AquaTrack</div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="map.html">Su Durumu Haritası</a>
+        <a href="quality.html" class="active">Su Kalitesi Paneli</a>
+        <a href="alerts.html">Uyarılar & Tahminler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Su Kalitesi Paneli</h2>
+    <p>Uzaktan algılama verilerine dayalı su kalitesi ölçümleri.</p>
+
+    <div class="card">
+      <canvas id="qualityChart" height="120"></canvas>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 AquaTrack</p>
+    </div>
+  </footer>
+
+  <script src="assets/main.js"></script>
+  <script>
+    const ctx = document.getElementById('qualityChart');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haz', 'Tem', 'Ağu'],
+        datasets: [{
+          label: 'Klorofil-a (µg/L)',
+          data: [12, 10, 8, 15, 18, 14, 20, 16],
+          borderColor: '#1e88e5',
+          tension: 0.3,
+          fill: true,
+          backgroundColor: 'rgba(30,136,229,0.1)'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
