@@ -88,7 +88,7 @@ def download_b5_b11_only(
                 file_per_band=True,  # Her bant için ayrı dosya oluştur
             )
 
-    # CSV kaydet
+
     df = pd.DataFrame(download_list)
     csv_path = os.path.join(
         export_folder,
@@ -113,4 +113,5 @@ if __name__ == "__main__":
         scale=10,
         cloud_pct_threshold=10,
         tile_size_km=10,
+
     )
