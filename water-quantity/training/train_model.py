@@ -110,6 +110,16 @@ with open(MODEL_DIR / "metrics_summary.json", "w") as f:
 print("All predictions and metrics saved.")
 
 """
+bestTest = 18586448.36
+bestIteration = 1811
+
+Shrink model to first 1812 iterations.
+H1 Test -> MAE=7929439 | RMSE=19421464 | 405 rows
+estTest = 25128003.09
+bestIteration = 1991
+
+Shrink model to first 1992 iterations.
+H2 Test -> MAE=6631277 | RMSE=14548807 | 358 rows
 bestTest = 16944027.79
 bestIteration = 1998
 
