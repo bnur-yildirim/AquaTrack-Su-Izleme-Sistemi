@@ -1,4 +1,0 @@
-,Best_Params,MAE,RMSE,Test_rows
-H1,"{'iterations': 1855, 'depth': 4, 'learning_rate': 0.019527440118332382, 'l2_leaf_reg': 1.7773259868286844, 'bagging_temperature': 4.262179737121845, 'random_strength': 1.5070317381416751}",5937132.260194044,12849667.662104739,405
-H2,"{'iterations': 782, 'depth': 4, 'learning_rate': 0.023816357310283653, 'l2_leaf_reg': 3.4622256415251513, 'bagging_temperature': 3.8594774961726213, 'random_strength': 0.5574756144814291}",4576318.900038423,8024441.891990838,358
-H3,"{'iterations': 612, 'depth': 4, 'learning_rate': 0.07994397865963468, 'l2_leaf_reg': 1.1644762679252452, 'bagging_temperature': 2.9399636447950246, 'random_strength': 0.5050909163932538}",5193965.786814652,9053380.39176703,317
