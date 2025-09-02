@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Su Tahmini — AquaTrack</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="assets/aquatrack-logo.svg" alt="AquaTrack" class="logo-mark" />
+        <div class="logo-text">AquaTrack</div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="map.html">Su Durumu Haritası</a>
+        <a href="quality.html">Su Kalitesi Paneli</a>
+        <a href="alerts.html">Uyarılar & Tahminler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 id="lake-title">Tahmin</h2>
+
+    <section class="card">
+      <h3>Su Miktarı Tahmini (2025 - 2030)</h3>
+      <canvas id="forecastChart" height="120"></canvas>
+    </section>
+
+    <section class="card">
+      <h3>Bu Yılın Durumu</h3>
+      <p><strong id="current-status">Yükleniyor...</strong></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 AquaTrack</p>
+    </div>
+  </footer>
+
+  <script>
+    // URL parametresinden göl ID'sini al
+    const urlParams = new URLSearchParams(window.location.search);
+    const lakeId = urlParams.get("lake_id") || "van";
+
+    // Sayfa başlığı
+    document.getElementById("lake-title").innerText = lakeId.toUpperCase() + " Gölü Tahmini";
+
+    // Backend’den veri çek (örnek JSON formatı)
+    // Gerçekte burası Flask/Django API’ye bağlanacak
+    async function loadForecast() {
+      // Simülasyon (backend yoksa)
+      const mockData = {
+        lake: lakeId,
+        forecast: [
+          { year: 2025, value: 120 },
+          { year: 2026, value: 115 },
+          { year: 2027, value: 110 },
+          { year: 2028, value: 105 },
+          { year: 2029, value: 98 },
+          { year: 2030, value: 92 }
+        ],
+        current: { change: "-4.5%", status: "Azalma eğilimi" }
+      };
+
+      // Grafik çiz
+      const ctx = document.getElementById("forecastChart").getContext("2d");
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: mockData.forecast.map(f => f.year),
+          datasets: [{
+            label: "Su Miktarı (m²)",
+            data: mockData.forecast.map(f => f.value),
+            borderColor: "#2196f3",
+            backgroundColor: "rgba(33,150,243,0.2)",
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: true }
+          }
+        }
+      });
+
+      // Bu yılın durumu
+      document.getElementById("current-status").innerText =
+        `Değişim: ${mockData.current.change} | ${mockData.current.status}`;
+    }
+
+    loadForecast();
+  </script>
+</body>
+</html>

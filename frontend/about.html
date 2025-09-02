@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Göller Hakkında — AquaTrack</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="assets/aquatrack-logo.svg" alt="AquaTrack" class="logo-mark" />
+        <div class="logo-text">AquaTrack</div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="map.html">Su Durumu Haritası</a>
+        <a href="quality.html">Su Kalitesi Paneli</a>
+        <a href="alerts.html">Uyarılar & Tahminler</a>
+        <a href="about.html" class="active">Göller Hakkında</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 id="lake-title">Göl Bilgisi</h2>
+
+    <section class="card-grid">
+      <!-- Genel Bilgi -->
+      <div class="card">
+        <h3>Genel Bilgi</h3>
+        <p id="lake-description">Yükleniyor...</p>
+      </div>
+
+      <!-- Özellikler -->
+      <div class="card">
+        <h3>Temel Özellikler</h3>
+        <ul>
+          <li><b>Yüzölçümü:</b> <span id="lake-area"></span> km²</li>
+          <li><b>Derinlik:</b> <span id="lake-depth"></span> m</li>
+          <li><b>Konum:</b> <span id="lake-location"></span></li>
+          <li><b>Ekosistem:</b> <span id="lake-ecosystem"></span></li>
+        </ul>
+      </div>
+
+      <!-- Harita -->
+      <div class="card">
+        <h3>Konum</h3>
+        <div id="lake-map" style="height:300px; border-radius:8px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 AquaTrack</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // URL parametresinden göl ID'si al
+    const urlParams = new URLSearchParams(window.location.search);
+    const lakeId = urlParams.get("lake_id") || "van";
+
+    // Mock veri (backend ile bağlanacak)
+    const lakes = {
+      "van": {
+        name: "Van Gölü",
+        description: "Türkiye'nin en büyük gölüdür. Sodalı ve tuzlu suya sahip olup, endemik inci kefali balığına ev sahipliği yapar.",
+        area: 3755,
+        depth: 450,
+        location: "Van, Bitlis",
+        ecosystem: "Sodalı göl ekosistemi",
+        coords: [38.5, 43.3]
+      },
+      "beysehir": {
+        name: "Beyşehir Gölü",
+        description: "Türkiye'nin en büyük tatlı su gölüdür. Su kaynakları ve tarım için kritik öneme sahiptir.",
+        area: 651,
+        depth: 10,
+        location: "Konya, Isparta",
+        ecosystem: "Tatlı su gölü ekosistemi",
+        coords: [37.7, 31.6]
+      }
+    };
+
+    const lake = lakes[lakeId];
+    document.getElementById("lake-title").innerText = lake.name + " — Hakkında";
+    document.getElementById("lake-description").innerText = lake.description;
+    document.getElementById("lake-area").innerText = lake.area;
+    document.getElementById("lake-depth").innerText = lake.depth;
+    document.getElementById("lake-location").innerText = lake.location;
+    document.getElementById("lake-ecosystem").innerText = lake.ecosystem;
+
+    // Harita render
+    const map = L.map("lake-map").setView(lake.coords, 8);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+    L.marker(lake.coords).addTo(map).bindPopup(lake.name);
+  </script>
+</body>
+</html>

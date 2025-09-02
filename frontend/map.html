@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Su Durumu Haritası — AquaTrack</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <!-- Leaflet Harita Kütüphanesi -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="assets/aquatrack-logo.svg" alt="AquaTrack" class="logo-mark" />
+        <div class="logo-text">AquaTrack</div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="map.html" class="active">Su Durumu Haritası</a>
+        <a href="quality.html">Su Kalitesi Paneli</a>
+        <a href="alerts.html">Uyarılar & Tahminler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Su Durumu Haritası</h2>
+    <p>Leaflet ile interaktif harita.</p>
+
+    <div id="map" style="height:420px; border-radius:10px;"></div>
+
+    <section class="legend card">
+      <h4>Gösterge</h4>
+      <ul class="legend-list">
+        <li><span class="swatch" style="background:#2e7d32"></span> Artış (&gt; %5)</li>
+        <li><span class="swatch" style="background:#ef6c00"></span> Stabil (-%5…%5)</li>
+        <li><span class="swatch" style="background:#c62828"></span> Azalış (&lt; -%5)</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 AquaTrack</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="main.js"></script>
+  <script>
+    var map = L.map('map').setView([39.0, 35.0], 6); // Türkiye merkezi
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    const API = (typeof API_BASE !== 'undefined') ? API_BASE : 'http://127.0.0.1:5000/api';
+
+    function colorByChange(pct) {
+      if (pct > 5) return '#2e7d32';
+      if (pct < -5) return '#c62828';
+      return '#ef6c00';
+    }
+
+    async function addLakeMarkers() {
+      try {
+        const res = await fetch(`${API}/lakes`);
+        const json = await res.json();
+        const lakes = json.lakes || {};
+        for (const [key, info] of Object.entries(lakes)) {
+          const lat = info.lat, lng = info.lng;
+          try {
+            const fRes = await fetch(`${API}/forecast?lake_id=${encodeURIComponent(key)}`);
+            const f = await fRes.json();
+            const areaList = f.actual || [];
+            const lastArea = areaList.length ? areaList[areaList.length - 1] : null;
+            const km2 = lastArea ? (lastArea / 1000000).toFixed(1) : '--';
+            const change = typeof f.change_percent === 'number' ? f.change_percent.toFixed(1) : '--';
+
+            // Su kalitesi (placeholder API)
+            let qText = 'pH: -, Oksijen: -';
+            try {
+              const qRes = await fetch(`${API}/quality/forecast?lake_id=${encodeURIComponent(key)}`);
+              const q = await qRes.json();
+              if (q && q.current) {
+                const ph = q.current.pH;
+                const dox = q.current['Çözünmüş Oksijen'];
+                qText = `pH: ${ph}, Oksijen: ${dox}`;
+              }
+            } catch (e) { /* yoksay */ }
+
+            const cNum = parseFloat(change);
+            const trend = isNaN(cNum) ? 'Bilinmiyor' : (cNum > 5 ? 'Artış' : (cNum < -5 ? 'Azalış' : 'Stabil'));
+            const rec = (trend === 'Artış')
+              ? ['Baraj çıkışlarını optimize et', 'Taşkın riski izleme sensörlerini kontrol et']
+              : (trend === 'Azalış')
+                ? ['Su tasarrufu tedbirleri', 'Yerel sulama planlarını gözden geçir']
+                : ['Rutin izleme yeterli', 'Aylık değerlendirme yap'];
+
+            const popup = `
+              <div style="min-width:240px">
+                <div style="font-weight:600;margin-bottom:6px">${info.name}</div>
+                <div>Su Alanı: <b>${km2} km²</b></div>
+                <div>Değişim: <b>${change}%</b> <span style="opacity:0.8">(${trend})</span></div>
+                <div>Su Kalitesi: <b>${qText}</b></div>
+                <div style="margin-top:8px;font-weight:600">Öneri</div>
+                <ul style="margin:4px 0 0 16px;padding:0;">
+                  <li>${rec[0]}</li>
+                  <li>${rec[1]}</li>
+                </ul>
+                <div style="margin-top:8px">
+                  <a href="model.html?lake_id=${encodeURIComponent(key)}">Detay / Grafik</a>
+                </div>
+              </div>`;
+
+            const color = typeof f.change_percent === 'number' ? colorByChange(f.change_percent) : '#1976d2';
+            L.circleMarker([lat, lng], { radius: 8, color, fillColor: color, fillOpacity: 0.8 })
+              .addTo(map)
+              .bindPopup(popup);
+          } catch (e) {
+            // Sadece marker oluştur (veri yoksa)
+            L.marker([lat, lng]).addTo(map).bindPopup(`<b>${info.name}</b>`);
+          }
+        }
+      } catch (e) {
+        console.error('Göller yüklenemedi', e);
+      }
+    }
+
+    addLakeMarkers();
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Su Kalitesi Paneli — AquaTrack</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="assets/aquatrack-logo.svg" alt="AquaTrack" class="logo-mark" />
+        <div class="logo-text">AquaTrack</div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="map.html">Su Durumu Haritası</a>
+        <a href="quality.html" class="active">Su Kalitesi Paneli</a>
+        <a href="alerts.html">Uyarılar & Tahminler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 id="lake-title">Su Kalitesi Paneli</h2>
+
+    <!-- Parametre Kartları -->
+    <section class="card-grid">
+      <div class="card">
+        <h3>pH</h3>
+        <p id="ph-value">Yükleniyor...</p>
+      </div>
+      <div class="card">
+        <h3>Bulanıklık (NTU)</h3>
+        <p id="turbidity-value">Yükleniyor...</p>
+      </div>
+      <div class="card">
+        <h3>Çözünmüş Oksijen (mg/L)</h3>
+        <p id="oxygen-value">Yükleniyor...</p>
+      </div>
+      <div class="card">
+        <h3>Nitrat (mg/L)</h3>
+        <p id="nitrate-value">Yükleniyor...</p>
+      </div>
+    </section>
+
+    <!-- Grafik -->
+    <section class="card">
+      <h3>Zaman Serisi</h3>
+      <canvas id="qualityChart" height="120"></canvas>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 AquaTrack</p>
+    </div>
+  </footer>
+
+  <script>
+    // URL parametresinden göl ID'si al
+    const urlParams = new URLSearchParams(window.location.search);
+    const lakeId = urlParams.get("lake_id") || "van";
+    document.getElementById("lake-title").innerText = lakeId.toUpperCase() + " Gölü Su Kalitesi";
+
+    async function loadQuality() {
+      // Mock veri (backend API bağlanacak)
+      const mockData = {
+        lake: lakeId,
+        parameters: {
+          ph: 7.4,
+          turbidity: 3.2,
+          oxygen: 8.1,
+          nitrate: 1.2
+        },
+        history: {
+          dates: ["2021", "2022", "2023", "2024", "2025"],
+          ph: [7.2, 7.3, 7.4, 7.5, 7.4],
+          turbidity: [2.9, 3.1, 3.0, 3.4, 3.2],
+          oxygen: [8.3, 8.0, 8.2, 8.4, 8.1],
+          nitrate: [1.0, 1.1, 1.3, 1.4, 1.2]
+        }
+      };
+
+      // Kartlara değer yaz
+      document.getElementById("ph-value").innerText = mockData.parameters.ph;
+      document.getElementById("turbidity-value").innerText = mockData.parameters.turbidity;
+      document.getElementById("oxygen-value").innerText = mockData.parameters.oxygen;
+      document.getElementById("nitrate-value").innerText = mockData.parameters.nitrate;
+
+      // Grafik
+      const ctx = document.getElementById("qualityChart").getContext("2d");
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: mockData.history.dates,
+          datasets: [
+            {
+              label: "pH",
+              data: mockData.history.ph,
+              borderColor: "#4caf50",
+              fill: false
+            },
+            {
+              label: "Bulanıklık",
+              data: mockData.history.turbidity,
+              borderColor: "#ff9800",
+              fill: false
+            },
+            {
+              label: "Oksijen",
+              data: mockData.history.oxygen,
+              borderColor: "#2196f3",
+              fill: false
+            },
+            {
+              label: "Nitrat",
+              data: mockData.history.nitrate,
+              borderColor: "#f44336",
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: "bottom" }
+          }
+        }
+      });
+    }
+
+    loadQuality();
+  </script>
+</body>
+</html>

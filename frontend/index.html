@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AquaTrack — Su Kaynakları İzleme Sistemi</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <img src="assets/aquatrack-logo.svg" alt="AquaTrack" class="logo-mark" />
+        <div class="logo-text">AquaTrack</div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="active">Ana Sayfa</a>
+        <a href="map.html">Su Durumu Haritası</a>
+        <a href="quality.html">Su Kalitesi Paneli</a>
+        <a href="alerts.html">Uyarılar &amp; Tahminler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Su Kaynakları İzleme ve Erken Uyarı Sistemi</h1>
+        <p>7 büyük gölümüzdeki su durumunu gerçek zamanlı izliyor, kuraklık risklerini tahmin ediyoruz.</p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="total-lakes">7</span>
+            <span class="stat-label">İzlenen Göl</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="active-alerts">2</span>
+            <span class="stat-label">Aktif Uyarı</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="last-update">--</span>
+            <span class="stat-label">Son Güncelleme</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard container">
+      <h2>Göl Durumları</h2>
+      <div class="lakes-grid" id="lakes-grid">
+        <!-- Göl kartları dinamik olarak yüklenecek -->
+      </div>
+    </section>
+
+    <section class="forecast-section container">
+      <h2>Su Alanı Tahminleri</h2>
+      <div class="forecast-controls" style="display:flex;gap:12px;align-items:center;margin:8px 0 16px 0;">
+        <label for="lake-select">Göl seç:</label>
+        <select id="lake-select"></select>
+        <span id="forecast-status" style="font-size:0.9rem;color:#666;">&nbsp;</span>
+      </div>
+      <div class="forecast-container">
+        <div class="chart-wrapper">
+          <canvas id="forecastChart"></canvas>
+        </div>
+        <div class="forecast-info">
+          <h3 id="forecast-title">Seçili Göl - 3 Aylık Tahmin</h3>
+          <div style="margin-bottom:12px;">
+            <div style="font-size:0.9rem;color:#555;">Son güncelleme: <span id="forecast-last-update">--</span></div>
+            <div style="font-size:0.9rem;color:#555;">Veri sayısı: <span id="forecast-datapoints">--</span></div>
+          </div>
+          <div class="forecast-metrics">
+            <div class="metric">
+              <span class="label">1 Ay Sonra:</span>
+              <span class="value" id="pred-1m">--</span>
+            </div>
+            <div class="metric">
+              <span class="label">2 Ay Sonra:</span>
+              <span class="value" id="pred-2m">--</span>
+            </div>
+            <div class="metric">
+              <span class="label">3 Ay Sonra:</span>
+              <span class="value" id="pred-3m">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quality-section container">
+      <h2>Su Kalitesi</h2>
+      <div class="forecast-controls" style="display:flex;gap:12px;align-items:center;margin:8px 0 16px 0;">
+        <label for="quality-lake-select">Göl seç:</label>
+        <select id="quality-lake-select"></select>
+        <span id="quality-status" style="font-size:0.9rem;color:#666;">&nbsp;</span>
+      </div>
+      <div class="quality-container" style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+        <div class="quality-card" style="flex:1;min-width:260px;">
+          <h3 id="quality-title">Seçili Göl - Su Kalitesi</h3>
+          <div class="forecast-metrics">
+            <div class="metric"><span class="label">pH:</span> <span class="value" id="q-ph">--</span></div>
+            <div class="metric"><span class="label">Turbidite:</span> <span class="value" id="q-turb">--</span></div>
+            <div class="metric"><span class="label">Çözünmüş Oksijen:</span> <span class="value" id="q-do">--</span></div>
+          </div>
+        </div>
+        <div class="quality-forecast" style="flex:1;min-width:260px;">
+          <h4>3 Aylık Öngörü</h4>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th style="text-align:left;border-bottom:1px solid #eee;padding:6px 4px;">Ay</th>
+                <th style="text-align:left;border-bottom:1px solid #eee;padding:6px 4px;">pH</th>
+                <th style="text-align:left;border-bottom:1px solid #eee;padding:6px 4px;">Turbidite</th>
+                <th style="text-align:left;border-bottom:1px solid #eee;padding:6px 4px;">Çöz. Oksijen</th>
+              </tr>
+            </thead>
+            <tbody id="quality-forecast-rows">
+              <tr><td style="padding:6px 4px;">1 Ay</td><td id="q1-ph">--</td><td id="q1-turb">--</td><td id="q1-do">--</td></tr>
+              <tr><td style="padding:6px 4px;">2 Ay</td><td id="q2-ph">--</td><td id="q2-turb">--</td><td id="q2-do">--</td></tr>
+              <tr><td style="padding:6px 4px;">3 Ay</td><td id="q3-ph">--</td><td id="q3-turb">--</td><td id="q3-do">--</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 AquaTrack. Tüm hakları saklıdır.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
