@@ -168,17 +168,14 @@ function createForecastChart(data) {
     const actual = data.actual || [];
     const predicted = data.predicted || [];
 
-    const actualKm2 = actual.map(val => (val !== null && val !== undefined ? val / 1000000 : null));
-    const predictedKm2 = predicted.map(val => (val !== null && val !== undefined ? val / 1000000 : null));
-
     forecastChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: years,
             datasets: [
                 {
-                    label: 'Gerçek Değerler',
-                    data: actualKm2,
+                    label: 'Gerçek Değerler (m²)',
+                    data: actual,
                     borderColor: '#2563eb',
                     backgroundColor: 'rgba(37, 99, 235, 0.1)',
                     borderWidth: 2,
@@ -187,8 +184,8 @@ function createForecastChart(data) {
                     spanGaps: false
                 },
                 {
-                    label: 'Tahmin Değerleri',
-                    data: predictedKm2,
+                    label: 'Tahmin Değerleri (m²)',
+                    data: predicted,
                     borderColor: '#dc2626',
                     backgroundColor: 'rgba(220, 38, 38, 0.1)',
                     borderWidth: 2,
@@ -202,7 +199,7 @@ function createForecastChart(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: { x: { title: { display: true, text: 'Yıl' } }, y: { title: { display: true, text: 'Su Alanı (km²)' }, beginAtZero: false } },
+            scales: { x: { title: { display: true, text: 'Yıl' } }, y: { title: { display: true, text: 'Su Alanı (m²)' }, beginAtZero: false } },
             plugins: { legend: { position: 'top' }, title: { display: true, text: `${data.lake_name} - Su Alanı Trend ve Tahminleri` } }
         }
     });
@@ -289,6 +286,10 @@ function selectLakeForForecast(lakeKey) {
     if (select) {
         select.value = lakeKey;
         updateForecastPanel(lakeKey);
+        const forecastSection = document.querySelector('.forecast-section') || document.getElementById('forecastChart');
+        if (forecastSection && forecastSection.scrollIntoView) {
+            forecastSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     } else {
         console.error('lake-select elemanı bulunamadı');
     }
