@@ -1,7 +1,8 @@
 import os
 import pandas as pd
-import ee
-import geemap
+import ee  # type: ignore
+import geemap  # type: ignore
+
 
 def download_b5_b11_only(
     hydro_lakes_id,
@@ -11,13 +12,13 @@ def download_b5_b11_only(
     scale=10,
     cloud_pct_threshold=10,
     tile_size_km=10,
-    project_id="deneme-468217",
+    project_id="aquatrack-468214",
 ):
     ee.Initialize(project=project_id)
 
     # Load HydroLAKES Turkey dataset and filter by lake ID
     hydro_lakes = ee.FeatureCollection(
-        "projects/deneme-468217/assets/hydrolakes"
+        "projects/aquatrack-468214/assets/HydroLAKES_Turkey"
     )
     lake_feature = hydro_lakes.filter(ee.Filter.eq("Hylak_id", hydro_lakes_id)).first()
     lake_geometry = lake_feature.geometry()
@@ -62,27 +63,25 @@ def download_b5_b11_only(
 
     # Get list of image IDs
     img_ids = collection.aggregate_array("system:index").getInfo()
-    
+
     print(f"Toplam {len(img_ids)} görüntü bulundu")
     print(f"Toplam {len(tiles)} tile var")
 
     for i, img_id in enumerate(img_ids):
         img = ee.Image(collection.filter(ee.Filter.eq("system:index", img_id)).first())
         date_str = img.date().format("YYYY-MM-dd").getInfo()
-        
+
         print(f"İşleniyor ({i+1}/{len(img_ids)}): {date_str}")
 
         for t_idx, tile_geom in tiles:
             download_list.append({"date": date_str, "tile": t_idx})
 
             filename_base = f"{date_str.replace('-', '')}_tile{t_idx}"
-            
+
             # B5 ve B11'i tek request ile indir
             geemap.ee_export_image(
                 img.select(["B5", "B11"]),
-                filename=os.path.join(
-                    export_folder, f"{filename_base}_B5_B11.tif"
-                ),
+                filename=os.path.join(export_folder, f"{filename_base}_B5_B11.tif"),
                 scale=scale,
                 region=tile_geom,
                 file_per_band=True,  # Her bant için ayrı dosya oluştur
@@ -101,15 +100,16 @@ def download_b5_b11_only(
 
     return df
 
+
 if __name__ == "__main__":
-    lake_id = 141  # Lake Van
-    export_folder = "./data/gol_van_B5_B11"
+    lake_id = 1340  # Lake Van
+    export_folder = "./data/gol_egridir_B5_B11"
 
     download_b5_b11_only(
         hydro_lakes_id=lake_id,
         export_folder=export_folder,
-        start_date="2018-06-11",
-        end_date="2021-12-31",
+        start_date="2019-03-23",
+        end_date="2024-12-31",
         scale=10,
         cloud_pct_threshold=10,
         tile_size_km=10,

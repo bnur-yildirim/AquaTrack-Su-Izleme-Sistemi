@@ -5,15 +5,24 @@ import pandas as pd
 from datetime import datetime
 
 # Ayarlamalar
-dataset_folder = r"C:\Users\glylm\Desktop\proje_aqua\van\data\gol_van"
-output_csv = os.path.join(dataset_folder, "van_lake_numerical_dataset.csv")
+dataset_folder = r"C:\Users\Beyza\Workspace\aquatrack\data\gol_egridir"
+output_csv = os.path.join(
+    dataset_folder,
+    r"C:\Users\Beyza\Workspace\aquatrack\water-quantity\output\labels\egridir_lake_numerical_dataset.csv",
+)
 ndwi_threshold = 0.3  # su pikseli eşik değeri
 
+
 def get_season(month):
-    if month in [12,1,2]: return "Winter"
-    elif month in [3,4,5]: return "Spring"
-    elif month in [6,7,8]: return "Summer"
-    else: return "Autumn"
+    if month in [12, 1, 2]:
+        return "Winter"
+    elif month in [3, 4, 5]:
+        return "Spring"
+    elif month in [6, 7, 8]:
+        return "Summer"
+    else:
+        return "Autumn"
+
 
 records = []
 
@@ -42,35 +51,39 @@ for year in os.listdir(dataset_folder):
 
         # Maskeden sayısal özellikler
         with rasterio.open(mask_path) as src:
-            mask = src.read(1).astype('float32')
+            mask = src.read(1).astype("float32")
             pixel_size = src.res[0] * src.res[1]  # m²/piksel
-            valid_mask = mask != src.nodata if src.nodata is not None else np.ones_like(mask, dtype=bool)
+            valid_mask = (
+                mask != src.nodata
+                if src.nodata is not None
+                else np.ones_like(mask, dtype=bool)
+            )
             mask[~valid_mask] = -9999
 
-            water_pixels = np.sum(mask[mask>ndwi_threshold]>0)
+            water_pixels = np.sum(mask[mask > ndwi_threshold] > 0)
             water_area_m2 = water_pixels * pixel_size
             water_percent = water_pixels / mask.size * 100
-            missing_ratio = np.sum(mask==-9999)/mask.size*100
-            ndwi_valid = mask[mask>ndwi_threshold]
+            missing_ratio = np.sum(mask == -9999) / mask.size * 100
+            ndwi_valid = mask[mask > ndwi_threshold]
 
-            ndwi_mean = np.mean(ndwi_valid) if ndwi_valid.size>0 else 0
-            ndwi_std = np.std(ndwi_valid) if ndwi_valid.size>0 else 0
-            ndwi_median = np.median(ndwi_valid) if ndwi_valid.size>0 else 0
-            ndwi_max = np.max(ndwi_valid) if ndwi_valid.size>0 else 0
-            ndwi_min = np.min(ndwi_valid) if ndwi_valid.size>0 else 0
-            ndwi_var = np.var(ndwi_valid) if ndwi_valid.size>0 else 0
+            ndwi_mean = np.mean(ndwi_valid) if ndwi_valid.size > 0 else 0
+            ndwi_std = np.std(ndwi_valid) if ndwi_valid.size > 0 else 0
+            ndwi_median = np.median(ndwi_valid) if ndwi_valid.size > 0 else 0
+            ndwi_max = np.max(ndwi_valid) if ndwi_valid.size > 0 else 0
+            ndwi_min = np.min(ndwi_valid) if ndwi_valid.size > 0 else 0
+            ndwi_var = np.var(ndwi_valid) if ndwi_valid.size > 0 else 0
 
         # Image bandlarından ek öznitelikler
         b_means = {}
         if os.path.exists(image_path):
             with rasterio.open(image_path) as img_src:
-                for i in range(1, img_src.count+1):
-                    band = img_src.read(i).astype('float32')
+                for i in range(1, img_src.count + 1):
+                    band = img_src.read(i).astype("float32")
                     band[~valid_mask] = np.nan
                     b_means[f"b{i}_mean"] = np.nanmean(band)
 
         record = {
-            "lake_id": 141,  # Van Gölü
+            "lake_id": 1340,  # Eğridir Gölü
             "date": date_obj,
             "year": year_val,
             "month": month_val,
