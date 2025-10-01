@@ -1,0 +1,60 @@
+{
+  "lake_metrics": {
+    "140": {
+      "mape": 18321.35,
+      "wmape": 2.11,
+      "r2": 0.999,
+      "reliability": "Excellent",
+      "sample_size": 1306
+    },
+    "141": {
+      "mape": 128.11,
+      "wmape": 0.9,
+      "r2": 0.999,
+      "reliability": "Excellent",
+      "sample_size": 1470
+    },
+    "1321": {
+      "mape": 1.52,
+      "wmape": 1.5,
+      "r2": 0.741,
+      "reliability": "Good",
+      "sample_size": 962
+    },
+    "1340": {
+      "mape": 3.24,
+      "wmape": 0.93,
+      "r2": 0.999,
+      "reliability": "Excellent",
+      "sample_size": 1633
+    },
+    "1342": {
+      "mape": 15735.57,
+      "wmape": 1.52,
+      "r2": 0.992,
+      "reliability": "Excellent",
+      "sample_size": 1431
+    },
+    "14510": {
+      "mape": 4.52,
+      "wmape": 4.17,
+      "r2": 0.791,
+      "reliability": "Good",
+      "sample_size": 368
+    },
+    "14741": {
+      "mape": 2.39,
+      "wmape": 2.31,
+      "r2": 0.679,
+      "reliability": "Fair",
+      "sample_size": 716
+    }
+  },
+  "summary": {
+    "total_lakes": 7,
+    "avg_wmape": 1.88,
+    "avg_r2": 0.886,
+    "avg_mape": 4.91,
+    "timestamp": "2024-01-01T00:00:00Z"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "horizon": 3,
+  "training_date": "2025-10-01T15:14:45.024023",
+  "best_params": {
+    "iterations": 317,
+    "depth": 4,
+    "learning_rate": 0.13520995684058915,
+    "l2_leaf_reg": 5.158087982378865,
+    "random_strength": 0.5812699768305088,
+    "bagging_temperature": 1.9903541972704444,
+    "border_count": 128
+  },
+  "selected_features": [
+    "water_area_target_H3",
+    "lag_1",
+    "rolling6_max",
+    "rolling_mean_3",
+    "baseline_seasonal",
+    "b8_mean",
+    "doy_sin",
+    "ndwi_mean_diff",
+    "rolling3_min",
+    "ndwi_kurtosis",
+    "water_area_cumsum",
+    "ndwi_std",
+    "doy",
+    "lag_3",
+    "water_area_m2",
+    "b2_mean",
+    "rolling12_mean",
+    "water_area_lag_2",
+    "trend_3m",
+    "lag_2",
+    "ndwi_min",
+    "rolling3_max",
+    "water_area_lag_6",
+    "rolling_mean_6",
+    "water_area_target_H1",
+    "b4_max",
+    "rolling_std_6",
+    "water_area_lag_12",
+    "ndwi_skew",
+    "ndwi_p75",
+    "ndwi_gt_0.3",
+    "water_area_target_H2",
+    "water_area_lag_4",
+    "rolling_std_3",
+    "area_vs_season_avg",
+    "water_area_lag_5",
+    "rolling6_mean",
+    "ndwi_var",
+    "ndwi_rolling_3",
+    "water_area_diff"
+  ],
+  "metrics": {
+    "train_mae": 3878463.6344162025,
+    "val_mae": 9993574.959777946,
+    "test_mae": 7362784.230140765,
+    "train_r2": 0.9997759067927542,
+    "val_r2": 0.9973808106839903,
+    "test_r2": 0.9987910286444046,
+    "overfitting_gap": 0.0023950961087638722
+  },
+  "lake_metrics": {
+    "140": {
+      "lake_name": "Tuz G\u00f6l\u00fc",
+      "horizon": 3,
+      "mae": 11145254.160503099,
+      "rmse": 13741502.543479476,
+      "wmape": 4.619377882180506,
+      "r2": 0.9941839502563932,
+      "samples": 53,
+      "mean_area": 241271756.6037736
+    },
+    "141": {
+      "lake_name": "Van G\u00f6l\u00fc",
+      "horizon": 3,
+      "mae": 15967244.341668453,
+      "rmse": 23343648.0776387,
+      "wmape": 1.7715619977851402,
+      "r2": 0.9965765178973269,
+      "samples": 56,
+      "mean_area": 901308808.9285715
+    },
+    "1340": {
+      "lake_name": "E\u011firdir G\u00f6l\u00fc",
+      "horizon": 3,
+      "mae": 8606597.444678944,
+      "rmse": 10541822.220038855,
+      "wmape": 3.414345333411216,
+      "r2": 0.9968765650830285,
+      "samples": 62,
+      "mean_area": 252071674.19354838
+    },
+    "1342": {
+      "lake_name": "Burdur G\u00f6l\u00fc",
+      "horizon": 3,
+      "mae": 2015683.3079257347,
+      "rmse": 2554868.7610797295,
+      "wmape": 1.7593416663606496,
+      "r2": 0.9730744779231306,
+      "samples": 56,
+      "mean_area": 114570316.07142857
+    },
+    "1321": {
+      "lake_name": "Ulubat G\u00f6l\u00fc",
+      "horizon": 3,
+      "mae": 2916239.255012251,
+      "rmse": 3687432.8499031025,
+      "wmape": 2.640517032322241,
+      "r2": -13.520769018454812,
+      "samples": 42,
+      "mean_area": 110441978.57142857
+    },
+    "14510": {
+      "lake_name": "Sapanca G\u00f6l\u00fc",
+      "horizon": 3,
+      "mae": 2004967.63907664,
+      "rmse": 2707057.9078435274,
+      "wmape": 4.9400512390097555,
+      "r2": 0.9063197368122832,
+      "samples": 15,
+      "mean_area": 40585968.486402586
+    },
+    "14741": {
+      "lake_name": "Salda G\u00f6l\u00fc",
+      "horizon": 3,
+      "mae": 1619069.8973118172,
+      "rmse": 2128692.590561597,
+      "wmape": 3.7677117969304272,
+      "r2": -4.975267130340976,
+      "samples": 30,
+      "mean_area": 42972233.13712267
+    }
+  },
+  "seasonal_metrics": {
+    "winter": {
+      "season_name": "K\u0131\u015f",
+      "horizon": 3,
+      "mae": 7245934.442774439,
+      "wmape": 2.6090773227912987,
+      "r2": 0.9987074251524298,
+      "samples": 39,
+      "mean_area": 277720187.87938565
+    },
+    "spring": {
+      "season_name": "\u0130lkbahar",
+      "horizon": 3,
+      "mae": 9282845.519753492,
+      "wmape": 3.1326929033595587,
+      "r2": 0.9981389282022343,
+      "samples": 73,
+      "mean_area": 296321593.15068495
+    },
+    "summer": {
+      "season_name": "Yaz",
+      "horizon": 3,
+      "mae": 6366336.889966134,
+      "wmape": 2.317442386394495,
+      "r2": 0.999105682639644,
+      "samples": 179,
+      "mean_area": 274713922.87214345
+    },
+    "fall": {
+      "season_name": "Sonbahar",
+      "horizon": 3,
+      "mae": 10115941.354604596,
+      "wmape": 2.279873990205501,
+      "r2": 0.9992539797369608,
+      "samples": 23,
+      "mean_area": 443706160.8695652
+    }
+  },
+  "small_lake_info": {
+    "small_lakes": [
+      1321,
+      14510,
+      14741
+    ],
+    "strategies_applied": [
+      "SMOTE-like augmentation",
+      "Transfer learning from large lakes",
+      "Ensemble weighting",
+      "Uncertainty estimation"
+    ],
+    "warnings": {
+      "1321": "Limited data (3 samples). Predictions have higher uncertainty.",
+      "14510": "Limited data (3 samples). Predictions have higher uncertainty.",
+      "14741": "Limited data (3 samples). Predictions have higher uncertainty."
+    }
+  },
+  "n_features": 40,
+  "n_samples": {
+    "train": 2020,
+    "val": 376,
+    "test": 319
+  }
+}

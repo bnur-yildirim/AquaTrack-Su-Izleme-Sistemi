@@ -1,0 +1,197 @@
+{
+  "H1": {
+    "140": {
+      "lake_name": "Tuz G\u00f6l\u00fc",
+      "wmape": 5.466714825653729,
+      "r2": 0.9868208733713918,
+      "samples": 66,
+      "unified_score": 85.67,
+      "reliability": "Iyi",
+      "data_quality": "Good"
+    },
+    "141": {
+      "lake_name": "Van G\u00f6l\u00fc",
+      "wmape": 3.4969907484247837,
+      "r2": 0.9914153318936246,
+      "samples": 69,
+      "unified_score": 90.83,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1340": {
+      "lake_name": "E\u011firdir G\u00f6l\u00fc",
+      "wmape": 1.4167624841580992,
+      "r2": 0.9989273162008059,
+      "samples": 81,
+      "unified_score": 96.4,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1342": {
+      "lake_name": "Burdur G\u00f6l\u00fc",
+      "wmape": 1.2663244501182847,
+      "r2": 0.9905998043809802,
+      "samples": 75,
+      "unified_score": 96.36,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1321": {
+      "lake_name": "Ulubat G\u00f6l\u00fc",
+      "wmape": 1.944614994862541,
+      "r2": 0,
+      "samples": 54,
+      "unified_score": 80.55,
+      "reliability": "Iyi",
+      "data_quality": "Good"
+    },
+    "14510": {
+      "lake_name": "Sapanca G\u00f6l\u00fc",
+      "wmape": 3.803998654105334,
+      "r2": 0,
+      "samples": 22,
+      "unified_score": 61.96,
+      "reliability": "Orta",
+      "data_quality": "Limited"
+    },
+    "14741": {
+      "lake_name": "Salda G\u00f6l\u00fc",
+      "wmape": 1.0061022762473673,
+      "r2": 0,
+      "samples": 39,
+      "unified_score": 89.94,
+      "reliability": "Iyi",
+      "data_quality": "Limited"
+    }
+  },
+  "H2": {
+    "140": {
+      "lake_name": "Tuz G\u00f6l\u00fc",
+      "wmape": 4.128933714281077,
+      "r2": 0.9940348852083278,
+      "samples": 59,
+      "unified_score": 89.38,
+      "reliability": "Iyi",
+      "data_quality": "Good"
+    },
+    "141": {
+      "lake_name": "Van G\u00f6l\u00fc",
+      "wmape": 2.0536994334074388,
+      "r2": 0.9954132575338537,
+      "samples": 61,
+      "unified_score": 94.64,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1340": {
+      "lake_name": "E\u011firdir G\u00f6l\u00fc",
+      "wmape": 1.6915498598030272,
+      "r2": 0.9984567254632299,
+      "samples": 71,
+      "unified_score": 95.69,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1342": {
+      "lake_name": "Burdur G\u00f6l\u00fc",
+      "wmape": 3.3748811354225534,
+      "r2": 0.952397658867969,
+      "samples": 63,
+      "unified_score": 89.18,
+      "reliability": "Iyi",
+      "data_quality": "Good"
+    },
+    "1321": {
+      "lake_name": "Ulubat G\u00f6l\u00fc",
+      "wmape": 3.2545567323104394,
+      "r2": 0,
+      "samples": 47,
+      "unified_score": 67.45,
+      "reliability": "Orta",
+      "data_quality": "Limited"
+    },
+    "14510": {
+      "lake_name": "Sapanca G\u00f6l\u00fc",
+      "wmape": 5.379650517485798,
+      "r2": 0.9468391325095024,
+      "samples": 19,
+      "unified_score": 83.89,
+      "reliability": "Iyi",
+      "data_quality": "Limited"
+    },
+    "14741": {
+      "lake_name": "Salda G\u00f6l\u00fc",
+      "wmape": 15.299772245398088,
+      "r2": 0,
+      "samples": 34,
+      "unified_score": 0,
+      "reliability": "Zayif",
+      "data_quality": "Limited"
+    }
+  },
+  "H3": {
+    "140": {
+      "lake_name": "Tuz G\u00f6l\u00fc",
+      "wmape": 4.619377882180506,
+      "r2": 0.9941839502563932,
+      "samples": 53,
+      "unified_score": 88.16,
+      "reliability": "Iyi",
+      "data_quality": "Good"
+    },
+    "141": {
+      "lake_name": "Van G\u00f6l\u00fc",
+      "wmape": 1.7715619977851402,
+      "r2": 0.9965765178973269,
+      "samples": 56,
+      "unified_score": 95.4,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1340": {
+      "lake_name": "E\u011firdir G\u00f6l\u00fc",
+      "wmape": 3.414345333411216,
+      "r2": 0.9968765650830285,
+      "samples": 62,
+      "unified_score": 91.31,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1342": {
+      "lake_name": "Burdur G\u00f6l\u00fc",
+      "wmape": 1.7593416663606496,
+      "r2": 0.9730744779231306,
+      "samples": 56,
+      "unified_score": 94.26,
+      "reliability": "Mukemmel",
+      "data_quality": "Good"
+    },
+    "1321": {
+      "lake_name": "Ulubat G\u00f6l\u00fc",
+      "wmape": 2.640517032322241,
+      "r2": 0,
+      "samples": 42,
+      "unified_score": 73.59,
+      "reliability": "Orta",
+      "data_quality": "Limited"
+    },
+    "14510": {
+      "lake_name": "Sapanca G\u00f6l\u00fc",
+      "wmape": 4.9400512390097555,
+      "r2": 0.9063197368122832,
+      "samples": 15,
+      "unified_score": 82.97,
+      "reliability": "Iyi",
+      "data_quality": "Limited"
+    },
+    "14741": {
+      "lake_name": "Salda G\u00f6l\u00fc",
+      "wmape": 3.7677117969304272,
+      "r2": 0,
+      "samples": 30,
+      "unified_score": 62.32,
+      "reliability": "Orta",
+      "data_quality": "Limited"
+    }
+  }
+}
