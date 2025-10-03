@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 32 32" aria-labelledby="title desc" role="img">
+  <title id="title">AquaTrack Logo</title>
+  <desc id="desc">Su damlası içinde altta küçük yeşil yaprak ve mavi ton dolgulu logo</desc>
+  <defs>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+  </defs>
+  <path d="M16 3 C16 3 9 12 9 17 a7 7 0 0 0 14 0 C23 12 16 3 16 3z" fill="url(#g)" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <g stroke="#166534" stroke-width="1.2" stroke-linecap="round" fill="none">
+    <path d="M16 20.0 L16 17.4"/>
+  </g>
+  <g fill="#22c55e" stroke="#166534" stroke-width="0.6">
+    <ellipse cx="14.8" cy="18.6" rx="1.3" ry="0.8" transform="rotate(-15 14.8 18.6)"/>
+    <ellipse cx="17.2" cy="18.6" rx="1.3" ry="0.8" transform="rotate(15 17.2 18.6)"/>
+  </g>
+  <path d="M10 20 q3 3 6 0 q3 -3 6 0" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
