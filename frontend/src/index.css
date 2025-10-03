@@ -1,3 +1,8 @@
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Global Stil Sistemi - Beyaz & Gri Lacivert Tema */
 
 /* CSS Variables - Tek yerden tüm renkleri kontrol et */

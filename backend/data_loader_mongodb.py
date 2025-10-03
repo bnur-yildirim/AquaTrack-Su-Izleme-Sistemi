@@ -74,8 +74,7 @@ class MongoDBDataLoader:
             
             # Fallback to prediction history + merge observations for actuals
             predictions = list(self.db["model_prediction_history"].find({
-                "lake_id": lake_id,
-                "prediction_type": "water_quantity"
+                "lake_id": lake_id
             }))
             
             if predictions:

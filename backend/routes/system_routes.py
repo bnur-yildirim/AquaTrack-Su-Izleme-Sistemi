@@ -149,6 +149,10 @@ def get_normalized_metrics():
         if predictions is None or predictions.empty:
             return jsonify({"error": "Veri bulunamadı"}), 404
         
+        # Lake info'yu fonksiyon içinde al
+        LAKE_INFO_DB = get_lakes_from_db()
+        KEY_BY_ID_DB = {info["id"]: key for key, info in LAKE_INFO_DB.items()}
+        
         # Her göl için normalize metrikler hesapla
         lake_metrics = {}
         
@@ -177,8 +181,8 @@ def get_normalized_metrics():
             
             if metrics:
                 # Göl ismini bul
-                lake_key = KEY_BY_ID.get(lake_id, f"lake_{lake_id}")
-                lake_name = LAKE_INFO.get(lake_key, {}).get("name", f"Lake_{lake_id}")
+                lake_key = KEY_BY_ID_DB.get(lake_id, f"lake_{lake_id}")
+                lake_name = LAKE_INFO_DB.get(lake_key, {}).get("name", f"Lake_{lake_id}")
                 lake_metrics[lake_name] = {
                     'lake_id': int(lake_id),
                     'area_km2': float(round(np.mean(y_true) / 1_000_000, 2)),

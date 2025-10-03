@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import MapPage from './Map'
 import ColorFeatures from '../components/ColorFeatures'
 import LakeComparisonChart from '../components/LakeComparisonChart'
@@ -6,6 +7,7 @@ import LakeComparisonChart from '../components/LakeComparisonChart'
 const API_BASE = 'http://localhost:5000'
 
 export default function HomePage({ setCurrentPage, setSearchParams }) {
+  const [searchParams] = useSearchParams()
   const [selectedLake, setSelectedLake] = useState(null)
   const [metrics, setMetrics] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -44,8 +46,13 @@ export default function HomePage({ setCurrentPage, setSearchParams }) {
   }
 
   const handleLakeSelect = (lakeKey) => {
-    // Sadece seçili gölü güncelle, sayfa değiştirme
+    // Seçili gölü güncelle ve URL parametrelerini de güncelle
     setSelectedLake(lakeKey)
+    
+    // URL parametrelerini güncelle
+    const newSearchParams = new URLSearchParams(searchParams)
+    newSearchParams.set('lake', lakeKey)
+    if (setSearchParams) setSearchParams(newSearchParams)
   }
 
   return (
