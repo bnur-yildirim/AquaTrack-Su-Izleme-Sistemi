@@ -1,5 +1,81 @@
-data
-data/*
-output
+# Environment variables (GÜVENLİK!)
 .env
-node_modules
+.env.local
+.env.production
+.env.development
+
+# Database files (GÜVENLİK!)
+*.db
+*.sqlite
+*.sqlite3
+backend/users.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ============================================================
+# BÜYÜK DOSYALAR - GITHUB'A KOYMA (370 MB)
+# ============================================================
+
+# Machine Learning Models (10 KB - 600 KB)
+*.pkl
+*.joblib
+*.h5
+*.pth
+
+# Ağır Veri Formatları
+*.parquet
+*.tif
+*.tiff
+
+# Ağır CSV'ler - Tek tek listeleme (daha güvenilir)
+data/archived/
+data/water_quantity/*.csv
+data/water_quality/*.csv
+data/gol_*/
+
+# Model Dosyaları
+models/
+backend/models/
+
+# Çıktılar
+outputs/
+water_quantity/output/
+
+# ============================================================
+# KÜÇÜK/ÖNEMLI DOSYALARI DAHİL ET (<1 MB)
+# ============================================================
+!data/README.md
+!data/water_quality/README.md
+!data/water_quantity/README.md
+!data/archived/README.md
+!data/analysis/README.md
+!data/summary/
+!data/*.json
+
+# ============================================================
+# GEÇİCİ DOSYALAR
+# ============================================================
+*.log
+*.tmp
+*.cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
