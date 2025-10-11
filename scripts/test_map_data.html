@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harita Veri Testi</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Harita Veri Testi</h1>
+        
+        <div class="test-section">
+            <h3>1. Backend Bağlantı Testi</h3>
+            <button onclick="testBackendConnection()">Backend Bağlantısını Test Et</button>
+            <div id="backend-status"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. Göl Listesi Testi</h3>
+            <button onclick="testLakesEndpoint()">Göl Listesini Al</button>
+            <div id="lakes-status"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. Koordinat Doğrulama</h3>
+            <button onclick="validateCoordinates()">Koordinatları Doğrula</button>
+            <div id="coordinates-status"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. Forecast Veri Testi</h3>
+            <button onclick="testForecastData()">Forecast Verilerini Test Et</button>
+            <div id="forecast-status"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>5. Harita Render Testi</h3>
+            <button onclick="testMapRender()">Harita Render Testi</button>
+            <div id="map-render-status"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+
+        async function testBackendConnection() {
+            const statusDiv = document.getElementById('backend-status');
+            statusDiv.innerHTML = '🔄 Test ediliyor...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/status`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Backend Bağlantısı Başarılı</h4>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Backend Hatası</h4>
+                            <p>Status: ${response.status}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Bağlantı Hatası</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testLakesEndpoint() {
+            const statusDiv = document.getElementById('lakes-status');
+            statusDiv.innerHTML = '🔄 Göl listesi alınıyor...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/lakes`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const lakes = data.lakes || {};
+                    const lakeCount = Object.keys(lakes).length;
+                    
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <h4>✅ Göl Listesi Başarılı (${lakeCount} göl)</h4>
+                            <h5>Göl Detayları:</h5>
+                            ${Object.entries(lakes).map(([key, info]) => `
+                                <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 3px;">
+                                    <strong>${info.name}</strong> (${key})<br>
+                                    Koordinatlar: ${info.lat}, ${info.lng}<br>
+                                    Veri Noktası: ${info.data_points || 0}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Göl Listesi Hatası</h4>
+                            <p>Status: ${response.status}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Göl Listesi Hatası</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function validateCoordinates() {
+            const statusDiv = document.getElementById('coordinates-status');
+            statusDiv.innerHTML = '🔄 Koordinatlar doğrulanıyor...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/lakes`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const lakes = data.lakes || {};
+                    const issues = [];
+                    const validLakes = [];
+                    
+                    Object.entries(lakes).forEach(([key, info]) => {
+                        const lat = parseFloat(info.lat);
+                        const lng = parseFloat(info.lng);
+                        
+                        if (isNaN(lat) || isNaN(lng)) {
+                            issues.push(`${info.name}: Geçersiz koordinatlar`);
+                        } else if (lat < 35 || lat > 42 || lng < 25 || lng > 45) {
+                            issues.push(`${info.name}: Koordinatlar Türkiye sınırları dışında (${lat}, ${lng})`);
+                        } else {
+                            validLakes.push({ name: info.name, lat, lng });
+                        }
+                    });
+                    
+                    if (issues.length === 0) {
+                        statusDiv.innerHTML = `
+                            <div class="success">
+                                <h4>✅ Tüm Koordinatlar Geçerli</h4>
+                                <p>${validLakes.length} göl koordinatları doğru</p>
+                            </div>
+                        `;
+                    } else {
+                        statusDiv.innerHTML = `
+                            <div class="warning">
+                                <h4>⚠️ Koordinat Sorunları</h4>
+                                <ul>${issues.map(issue => `<li>${issue}</li>`).join('')}</ul>
+                            </div>
+                        `;
+                    }
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <h4>❌ Koordinat Doğrulama Hatası</h4>
+                            <p>Status: ${response.status}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Koordinat Doğrulama Hatası</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testForecastData() {
+            const statusDiv = document.getElementById('forecast-status');
+            statusDiv.innerHTML = '🔄 Forecast verileri test ediliyor...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/lakes`);
+                const lakesData = await response.json();
+                const lakes = lakesData.lakes || {};
+                
+                const testResults = [];
+                
+                for (const [key, info] of Object.entries(lakes)) {
+                    try {
+                        const forecastRes = await fetch(`${API_BASE}/api/forecast?lake_id=${key}`);
+                        const forecast = forecastRes.ok ? await forecastRes.json() : null;
+                        
+                        testResults.push({
+                            name: info.name,
+                            key: key,
+                            success: forecastRes.ok,
+                            hasData: forecast && forecast.actual && forecast.predicted,
+                            coordinates: forecast ? forecast.coordinates : null
+                        });
+                    } catch (error) {
+                        testResults.push({
+                            name: info.name,
+                            key: key,
+                            success: false,
+                            error: error.message
+                        });
+                    }
+                }
+                
+                const successCount = testResults.filter(r => r.success).length;
+                const dataCount = testResults.filter(r => r.hasData).length;
+                
+                statusDiv.innerHTML = `
+                    <div class="${successCount === testResults.length ? 'success' : 'warning'}">
+                        <h4>${successCount === testResults.length ? '✅' : '⚠️'} Forecast Test Sonuçları</h4>
+                        <p>Başarılı: ${successCount}/${testResults.length} | Veri Var: ${dataCount}/${testResults.length}</p>
+                        <details>
+                            <summary>Detaylı Sonuçlar</summary>
+                            <pre>${JSON.stringify(testResults, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Forecast Test Hatası</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testMapRender() {
+            const statusDiv = document.getElementById('map-render-status');
+            statusDiv.innerHTML = '🔄 Harita render testi yapılıyor...';
+            
+            try {
+                // Leaflet kütüphanesini yükle
+                if (!window.L) {
+                    const script = document.createElement('script');
+                    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+                    script.onload = () => performMapTest();
+                    document.head.appendChild(script);
+                    
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+                    document.head.appendChild(link);
+                } else {
+                    performMapTest();
+                }
+                
+                function performMapTest() {
+                    try {
+                        // Test haritası oluştur
+                        const testMap = L.map('test-map').setView([38.5, 35.0], 7);
+                        
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(testMap);
+                        
+                        // Test marker'ları ekle
+                        const testMarkers = [
+                            { name: 'Van Gölü', lat: 38.5, lng: 43.0 },
+                            { name: 'Tuz Gölü', lat: 38.5, lng: 33.5 }
+                        ];
+                        
+                        testMarkers.forEach(marker => {
+                            L.marker([marker.lat, marker.lng])
+                                .addTo(testMap)
+                                .bindPopup(marker.name);
+                        });
+                        
+                        statusDiv.innerHTML = `
+                            <div class="success">
+                                <h4>✅ Harita Render Testi Başarılı</h4>
+                                <p>Leaflet haritası başarıyla oluşturuldu</p>
+                                <div id="test-map" style="height: 300px; width: 100%; margin: 10px 0;"></div>
+                            </div>
+                        `;
+                    } catch (error) {
+                        statusDiv.innerHTML = `
+                            <div class="error">
+                                <h4>❌ Harita Render Hatası</h4>
+                                <p>${error.message}</p>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <h4>❌ Harita Render Test Hatası</h4>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Sayfa yüklendiğinde otomatik test
+        window.onload = function() {
+            console.log('🧪 Harita veri testi başlatılıyor...');
+        };
+    </script>
+</body>
+</html>
