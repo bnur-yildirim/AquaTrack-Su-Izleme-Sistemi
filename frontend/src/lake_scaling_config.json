@@ -1,0 +1,65 @@
+{
+  "140": {
+    "name": "Tuz Gölü",
+    "expected_range": [
+      0.0,
+      1070.3099
+    ],
+    "typical_value": 250.9541916547789,
+    "category": "Büyük"
+  },
+  "141": {
+    "name": "Van Gölü",
+    "expected_range": [
+      0.0,
+      2175.3458
+    ],
+    "typical_value": 922.1147546854083,
+    "category": "Çok Büyük"
+  },
+  "1321": {
+    "name": "Ulubat Gölü",
+    "expected_range": [
+      49.0331,
+      116.8526
+    ],
+    "typical_value": 110.82289688149687,
+    "category": "Orta"
+  },
+  "1340": {
+    "name": "Eğirdir Gölü",
+    "expected_range": [
+      4.6972,
+      453.0686
+    ],
+    "typical_value": 329.87144023270054,
+    "category": "Büyük"
+  },
+  "1342": {
+    "name": "Burdur Gölü",
+    "expected_range": [
+      0.0,
+      148.6128
+    ],
+    "typical_value": 107.77856043024772,
+    "category": "Orta"
+  },
+  "14510": {
+    "name": "Sapanca Gölü",
+    "expected_range": [
+      7.2038,
+      44.9137
+    ],
+    "typical_value": 42.27571929347826,
+    "category": "Küçük"
+  },
+  "14741": {
+    "name": "Salda Gölü",
+    "expected_range": [
+      22.6938,
+      43.8755
+    ],
+    "typical_value": 42.80936019553073,
+    "category": "Küçük"
+  }
+}
