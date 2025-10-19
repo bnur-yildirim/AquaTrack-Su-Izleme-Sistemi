@@ -6,6 +6,10 @@ Güvenlik güncellemeleri ile
 from flask import Flask
 from flask_cors import CORS
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 from data_loader import load_data
 from models import load_models
@@ -32,9 +36,15 @@ from security.rate_limiter import rate_limiter
 
 app = Flask(__name__)
 
-# CORS Configuration - Allow all origins for now
-print("🔧 CORS configured to allow all origins")
-CORS(app, origins="*", supports_credentials=False)
+# Flask Configuration from Environment
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-key')
+app.config['FLASK_ENV'] = os.getenv('FLASK_ENV', 'development')
+app.config['FLASK_DEBUG'] = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
+
+# CORS Configuration - Read from environment
+cors_origins = os.getenv('CORS_ORIGINS', '*')
+print(f"🔧 CORS configured with origins: {cors_origins}")
+CORS(app, origins=cors_origins.split(',') if cors_origins != '*' else "*", supports_credentials=False)
 
 # Test route to verify app is working
 @app.route('/api/test')
