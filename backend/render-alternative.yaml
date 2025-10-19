@@ -1,0 +1,10 @@
+# Alternative render.yaml configuration
+# Use this if the main render.yaml has issues
+
+services:
+  - type: web
+    name: aqua-lake-backend
+    env: docker
+    plan: free
+    dockerfilePath: backend/Dockerfile
+    healthCheckPath: /api/health

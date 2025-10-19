@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: aqua-lake-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: CORS_ORIGINS
+        value: https://aquatrack.tr,https://aquatrack-tr.onrender.com
+    healthCheckPath: /api/health

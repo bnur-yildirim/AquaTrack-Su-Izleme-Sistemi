@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: aqua-lake-backend
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: False
+      - key: HOST
+        value: 0.0.0.0
+      - key: SECRET_KEY
+        value: jfjxn.csFLS,ddj,.:gdGdju42^4/7%(4tersj)ıwwj,d83e,DsjsFsFfGDffsFSDs.,
+      - key: CORS_ORIGINS
+        value: https://aquatrack.tr,https://aquatrack-tr.onrender.com
+      - key: LOG_LEVEL
+        value: INFO
+      - key: WORKERS
+        value: 2
+      - key: TIMEOUT
+        value: 120
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /api/health
