@@ -1,0 +1,29 @@
+# Render.com Frontend Configuration
+services:
+  - type: web
+    name: aquatrack-frontend
+    env: static
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_BASE_URL
+        value: https://aqua-lake-backend.onrender.com
+      - key: VITE_FRONTEND_URL
+        value: https://aquatrack.tr
+      - key: VITE_BACKEND_URL
+        value: https://aqua-lake-backend.onrender.com
+      - key: VITE_APP_TITLE
+        value: Aqua Lake Project
+      - key: VITE_APP_VERSION
+        value: 1.0.0
+      - key: VITE_BUILD_SOURCEMAP
+        value: false
+      - key: VITE_BUILD_MINIFY
+        value: true
+      - key: VITE_ENABLE_DEBUG
+        value: false
+      - key: VITE_ENABLE_LOGGING
+        value: false
